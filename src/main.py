@@ -25,7 +25,7 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from . import graph, maze
+from . import export, graph, maze
 from . import subtask_a, subtask_b, subtask_c, subtask_d, subtask_e
 
 
@@ -43,6 +43,31 @@ def _run(task: str, grid, g, *, mode: int, cost: str):
     raise ValueError(f"Unknown task: {task}")
 
 
+def _highlight_from(result) -> list | None:
+    """Pick something for the SVG to colour from a subtask result, if any."""
+    if not isinstance(result, dict):
+        return None
+    return (
+        result.get("path")
+        or result.get("positive_flow_edges")
+        or result.get("tree_edges")
+        or None
+    )
+
+
+def _export(g, base: Path, fmt: str, *, highlight=None) -> None:
+    """Write the chosen export format(s) using `base` as the file stem."""
+    if fmt in ("graphml", "all"):
+        export.to_graphml(g, base.with_suffix(".graphml"))
+    if fmt in ("json", "all"):
+        export.to_json(g, base.with_suffix(".json"))
+    if fmt in ("csv", "all"):
+        export.to_csv(g, base.with_suffix(".csv"))
+    if fmt in ("svg", "all"):
+        export.to_svg(g, base.with_suffix(".svg"), highlight=highlight)
+    print(f"[export] wrote {fmt} for '{base}'")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Maze Graph Algorithms (RTU DIP321)")
     parser.add_argument("maze_file", type=Path, help="Path to maze .txt file")
@@ -58,20 +83,35 @@ def main(argv: list[str] | None = None) -> int:
         "--cost", choices=["enter", "leave", "combined"], default="enter",
         help="Cost model for Subtask B",
     )
+    parser.add_argument(
+        "--export", choices=["graphml", "json", "csv", "svg", "all"], default=None,
+        help="Also export the graph in this format (extension)",
+    )
+    parser.add_argument(
+        "--export-out", type=Path, default=None,
+        help="Output base path for --export (default: the maze file stem)",
+    )
     args = parser.parse_args(argv)
 
     grid = maze.load(args.maze_file)
     g = graph.build(grid, mode=int(args.mode))
 
     tasks = ["A", "B", "C", "D", "E"] if args.task == "all" else [args.task]
+    last_result = None
     for t in tasks:
         print(f"=== Subtask {t} ===")
         try:
-            result = _run(t, grid, g, mode=int(args.mode), cost=args.cost)
-            print(result)
+            last_result = _run(t, grid, g, mode=int(args.mode), cost=args.cost)
+            print(last_result)
         except NotImplementedError as exc:
             print(f"[not implemented] {exc}")
         print()
+
+    if args.export:
+        base = args.export_out or Path(args.maze_file).with_suffix("")
+        # only highlight when a single task ran, so the overlay is unambiguous
+        highlight = _highlight_from(last_result) if args.task != "all" else None
+        _export(g, base, args.export, highlight=highlight)
     return 0
 
 
