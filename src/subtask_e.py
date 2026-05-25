@@ -18,12 +18,14 @@ Approach
    to skip edges that would form a cycle.
 5. Accept edge when its endpoints are in different sets; stop after |V|-1 edges.
 
-Cycle avoidance : Union-Find — two vertices are in the same tree iff
-                  find(u) == find(v); merging via union-by-rank keeps trees flat.
-Edge selection  : sort ascending by weight → always pick the globally
-                  cheapest remaining edge that doesn't create a cycle.
+Cycle avoidance : Union-Find. Two vertices are in the same tree iff
+                  find(u) == find(v); union-by-rank keeps the trees flat.
+Edge selection  : sort ascending by weight, then always pick the globally
+                  cheapest remaining edge whose endpoints are in different
+                  sets (otherwise it would close a cycle).
 
-Time complexity : O(E log E)  — sort dominates
+Time complexity : O(E log E) - the sort dominates; the Union-Find ops are
+                  effectively O(alpha(V)).
 Space complexity: O(V + E)
 """
 
@@ -48,18 +50,23 @@ class _DSU:
         self._rank: dict[tuple, int] = {v: 0 for v in vertices}
 
     def find(self, x: tuple) -> tuple:
+        # Path halving: every other node on the way to the root gets
+        # re-pointed straight at its grandparent. This flattens the tree
+        # without an extra recursive pass, so find stays cache-friendly.
         while self._parent[x] != x:
-            # Path compression (halving)
             self._parent[x] = self._parent[self._parent[x]]
             x = self._parent[x]
         return x
 
     def union(self, x: tuple, y: tuple) -> bool:
-        """Merge sets of x and y. Returns True if they were different sets."""
+        """Merge the sets of x and y. Returns True if they were different sets
+        (i.e. we actually merged), False if x and y were already connected -
+        in which case the edge would close a cycle and should be skipped."""
         rx, ry = self.find(x), self.find(y)
         if rx == ry:
             return False
-        # Union by rank
+        # Union by rank: attach the shorter tree under the taller one. Keeps
+        # the tree depth O(log V) without rebalancing.
         if self._rank[rx] < self._rank[ry]:
             rx, ry = ry, rx
         self._parent[ry] = rx
@@ -77,7 +84,9 @@ def solve(graph: "Graph") -> dict:
     src = graph.start
     dst = graph.goal
 
-    # --- Step 1: BFS to find S's connected component ---
+    # Step 1: find every vertex in S's connected component via BFS. The MST
+    # only makes sense inside one component - if the maze is split, vertices
+    # we can't reach from S have nothing to do with our tree.
     component: set[tuple] = set()
     queue: deque[tuple] = deque([src])
     component.add(src)
@@ -90,7 +99,9 @@ def solve(graph: "Graph") -> dict:
 
     goal_reachable = dst in component
 
-    # --- Step 2: Collect undirected edges (each edge once) ---
+    # Step 2: collect every undirected edge inside the component. The adjacency
+    # list lists each neighbour pair twice (once from each side), so we use a
+    # frozenset key to make sure each pair lands in `edges` only once.
     seen_edges: set[frozenset] = set()
     edges: list[tuple[int, tuple, tuple]] = []  # (weight, u, v)
 
@@ -107,14 +118,19 @@ def solve(graph: "Graph") -> dict:
             weight = val_u + val_v
             edges.append((weight, u, v))
 
-    # --- Step 3: Sort by weight ---
+    # Step 3: sort all candidate edges by weight. Kruskal's greedy proof relies
+    # on this: by always trying the cheapest edge next, the resulting tree is
+    # provably the minimum-weight spanning tree.
     edges.sort(key=lambda e: e[0])
 
-    # --- Step 4 & 5: Kruskal ---
+    # Step 4 + 5: walk the sorted edges. Add an edge to the tree only when its
+    # endpoints belong to different components in the DSU - otherwise we'd
+    # close a cycle. Stop as soon as we have |V|-1 edges, which is exactly
+    # the size of any spanning tree on |V| vertices.
     dsu = _DSU(list(component))
     tree_edges: list[tuple[tuple, tuple, int]] = []
     total_weight = 0
-    target = len(component) - 1  # MST has |V|-1 edges
+    target = len(component) - 1
 
     for weight, u, v in edges:
         if len(tree_edges) == target:

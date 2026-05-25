@@ -33,11 +33,16 @@ def solve(graph: "Graph") -> dict:
     goal = graph.goal
     adj = graph.adj
 
+    # parent doubles as the "visited" set: presence as a key means we've seen
+    # the vertex, and the value is the cell we came from (None for start).
+    # That lets us rebuild the path later without a separate visited set.
     parent: dict["Vertex", "Vertex | None"] = {start: None}
     queue: deque["Vertex"] = deque([start])
 
     while queue:
         v = queue.popleft()
+        # Early exit: BFS expands in layers, so the first time we pop the goal
+        # the number of edges from start is already the minimum possible.
         if v == goal:
             break
         for n in adj[v]:
@@ -45,6 +50,8 @@ def solve(graph: "Graph") -> dict:
                 parent[n] = v
                 queue.append(n)
 
+    # If the maze splits into disconnected regions, the goal might never enter
+    # the parent map. Return a clear "unreachable" result instead of crashing.
     if goal not in parent:
         return {
             "moves": None,
@@ -53,6 +60,7 @@ def solve(graph: "Graph") -> dict:
             "reachable": False,
         }
 
+    # Walk parent links from goal back to start, then reverse to get S -> G.
     path: list["Vertex"] = []
     cur: "Vertex | None" = goal
     while cur is not None:
