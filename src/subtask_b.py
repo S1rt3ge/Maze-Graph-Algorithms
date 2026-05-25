@@ -60,11 +60,16 @@ def solve(graph: "Graph", cost_model: str = "enter") -> dict:
     while heap:
         cost, u = heapq.heappop(heap)
 
-        # Stale entry — skip
+        # Skip stale heap entries: when we relax a vertex we just push a new
+        # (smaller-cost, vertex) pair instead of updating the old one, so the
+        # heap can contain several entries for the same vertex. Only the
+        # smallest one is real, the rest must be ignored.
         if cost > dist.get(u, float("inf")):
             continue
 
-        # Goal reached — stop early
+        # All edge weights are non-negative (cell values are 0..9), so once
+        # Dijkstra pops the goal we have its final shortest distance and can
+        # stop right away - the rest of the heap can only contain >= costs.
         if u == dst:
             break
 

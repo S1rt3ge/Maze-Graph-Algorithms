@@ -35,24 +35,33 @@ def solve(grid: list[list[str]], mode: int = 4) -> dict:
     """
     g = graph.build(grid, mode=mode)
     adj = g.adj
-    source = g.goal   # flow runs G -> S
+    source = g.goal   # the spec asks for the flow that can be pushed from G to S
     sink = g.start
 
-    # capacity[(u, v)]: an edge into v costs value(v), except edges entering
-    # S or G, which the spec fixes at 100.
+    # Build the capacity table. Every (u, v) with v non-wall gets capacity
+    # value(v) - the cost of "entering" v. The two exceptions (S, G) get a
+    # forced 100 so they are not blocked by their value of 0, otherwise no
+    # flow could leave G or arrive at S at all.
     capacity: dict[tuple, int] = {}
     for u, neighbours in adj.items():
         for v in neighbours:
             head = grid[v[0]][v[1]]
             capacity[(u, v)] = CAP_OVERRIDE if head in ("S", "G") else maze.value_of(head)
 
-    # residual starts as a copy of capacity; reverse edges already exist as keys
-    # because the grid adjacency is symmetric, so pushing flow back is well defined.
+    # `residual` is the residual graph; it starts as a copy of capacity.
+    # When we push f units along u -> v we do:
+    #     residual[(u, v)] -= f      (less spare capacity forward)
+    #     residual[(v, u)] += f      (we can now "cancel" that flow later
+    #                                  by pushing back through v -> u)
+    # The neighbour relation is symmetric, so (v, u) is already a key.
     residual = dict(capacity)
 
     max_flow = 0
     while True:
-        # BFS for a shortest augmenting path (in edges) with spare capacity.
+        # Edmonds-Karp: find the SHORTEST augmenting path (fewest edges) using
+        # BFS over residual edges with capacity > 0. Using BFS instead of
+        # plain DFS is what gives the O(V * E^2) bound; with DFS the algorithm
+        # is still Ford-Fulkerson but the bound depends on integer capacities.
         parent: dict[tuple, tuple | None] = {source: None}
         queue = deque([source])
         while queue:
@@ -65,9 +74,13 @@ def solve(grid: list[list[str]], mode: int = 4) -> dict:
                     queue.append(v)
 
         if sink not in parent:
-            break  # no augmenting path left -> current flow is maximum
+            # No path from G to S with spare capacity left. By the max-flow
+            # min-cut theorem the current flow is already the maximum.
+            break
 
-        # bottleneck = smallest residual capacity along the path
+        # First pass over the path: find the bottleneck = the smallest residual
+        # capacity on any edge of the path. That's the largest amount we can
+        # push through without overflowing any edge.
         bottleneck = float("inf")
         v = sink
         while parent[v] is not None:
@@ -75,7 +88,9 @@ def solve(grid: list[list[str]], mode: int = 4) -> dict:
             bottleneck = min(bottleneck, residual[(u, v)])
             v = u
 
-        # push the bottleneck: subtract forward, add to the reverse edge
+        # Second pass: actually push the bottleneck. Subtract on the forward
+        # edge, add on the reverse edge (so future augmenting paths can
+        # "undo" this decision if a better route appears).
         v = sink
         while parent[v] is not None:
             u = parent[v]
@@ -85,7 +100,9 @@ def solve(grid: list[list[str]], mode: int = 4) -> dict:
 
         max_flow += bottleneck
 
-    # net flow on an edge = capacity - remaining residual; report positives.
+    # Reconstruct the actual flow on each forward edge by comparing the
+    # original capacity to whatever is left in the residual. Positive
+    # difference == net flow we ended up pushing on that edge.
     positive_flow_edges = []
     for (u, v), cap in capacity.items():
         flow = cap - residual[(u, v)]

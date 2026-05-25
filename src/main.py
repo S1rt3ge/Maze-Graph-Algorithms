@@ -1,6 +1,6 @@
 """
 Final Group Project: Maze Graph Algorithms
-RTU DIP321 — Algoritmi un programmesanas metodes, Spring 2026.
+RTU DIP321 - Algoritmi un programmesanas metodes, Spring 2026.
 
 Team:
   - Oleksii Burianov   (231ADB220)
