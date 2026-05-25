@@ -1,6 +1,6 @@
 """Subtask E: minimum spanning tree (Kruskal with Union-Find).
 
-Owner: Kirill Pochinchuk.
+Owner: Kirill Pochinchik.
 
 Undirected graph:
   - vertices: all non-wall cells
