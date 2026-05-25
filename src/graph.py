@@ -11,15 +11,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-<<<<<<< HEAD
-from . import maze as maze_utils
-
-Vertex = tuple[int, int]
-
-_DIRS_4 = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-_DIRS_8 = [(-1, 0), (1, 0), (0, -1), (0, 1),
-           (-1, -1), (-1, 1), (1, -1), (1, 1)]
-=======
 from . import maze
 
 Vertex = tuple[int, int]
@@ -37,7 +28,6 @@ DIRS_8: tuple[tuple[int, int], ...] = DIRS_4 + (
     (1, -1),   # down-left
     (1, 1),    # down-right
 )
->>>>>>> 765997de98c4f29f1acfeb16815cf336b679b224
 
 
 @dataclass
@@ -50,16 +40,6 @@ class Graph:
 
 
 def build(grid: list[list[str]], mode: int = 4) -> Graph:
-<<<<<<< HEAD
-    """Construct an adjacency-list graph for the given maze grid."""
-    rows = len(grid)
-    cols = len(grid[0]) if rows else 0
-
-    start = maze_utils.find(grid, "S")
-    goal = maze_utils.find(grid, "G")
-
-    dirs = _DIRS_8 if mode == 8 else _DIRS_4
-=======
     """Build an adjacency-list graph for the maze.
 
     Vertices: every non-wall cell.
@@ -71,27 +51,17 @@ def build(grid: list[list[str]], mode: int = 4) -> Graph:
     dirs = DIRS_4 if mode == 4 else DIRS_8
     rows = len(grid)
     cols = len(grid[0]) if rows else 0
->>>>>>> 765997de98c4f29f1acfeb16815cf336b679b224
 
     adj: dict[Vertex, list[Vertex]] = {}
     for r in range(rows):
         for c in range(cols):
             if grid[r][c] == "X":
                 continue
-<<<<<<< HEAD
-            v: Vertex = (r, c)
-=======
->>>>>>> 765997de98c4f29f1acfeb16815cf336b679b224
             neighbours: list[Vertex] = []
             for dr, dc in dirs:
                 nr, nc = r + dr, c + dc
                 if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != "X":
                     neighbours.append((nr, nc))
-<<<<<<< HEAD
-            adj[v] = neighbours
-
-    return Graph(grid=grid, mode=mode, adj=adj, start=start, goal=goal)
-=======
             adj[(r, c)] = neighbours
 
     return Graph(
@@ -101,4 +71,3 @@ def build(grid: list[list[str]], mode: int = 4) -> Graph:
         start=maze.find(grid, "S"),
         goal=maze.find(grid, "G"),
     )
->>>>>>> 765997de98c4f29f1acfeb16815cf336b679b224
