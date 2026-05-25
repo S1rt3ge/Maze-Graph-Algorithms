@@ -1,0 +1,408 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns">
+  <key id="value" for="node" attr.name="value" attr.type="int" />
+  <key id="type" for="node" attr.name="type" attr.type="string" />
+  <graph id="maze" edgedefault="undirected">
+    <node id="0,0">
+      <data key="value">0</data>
+      <data key="type">start</data>
+    </node>
+    <node id="0,1">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="0,2">
+      <data key="value">2</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="0,3">
+      <data key="value">3</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="0,4">
+      <data key="value">4</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="0,6">
+      <data key="value">6</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="0,7">
+      <data key="value">7</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="0,8">
+      <data key="value">8</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="0,9">
+      <data key="value">9</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="1,0">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="1,2">
+      <data key="value">2</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="1,4">
+      <data key="value">4</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="1,6">
+      <data key="value">6</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="1,8">
+      <data key="value">8</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="1,9">
+      <data key="value">9</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,0">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,1">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,2">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,3">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,4">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,6">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,7">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,8">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="2,9">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="3,1">
+      <data key="value">3</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="3,5">
+      <data key="value">4</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="3,9">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,0">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,1">
+      <data key="value">2</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,2">
+      <data key="value">3</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,3">
+      <data key="value">4</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,4">
+      <data key="value">5</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,5">
+      <data key="value">4</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,6">
+      <data key="value">3</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,7">
+      <data key="value">2</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,8">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="4,9">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="5,0">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="5,4">
+      <data key="value">5</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="5,8">
+      <data key="value">2</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="5,9">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,0">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,1">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,2">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,3">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,4">
+      <data key="value">5</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,5">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,6">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,7">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,8">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="6,9">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="7,0">
+      <data key="value">9</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="7,2">
+      <data key="value">9</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="7,4">
+      <data key="value">5</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="7,6">
+      <data key="value">9</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="7,8">
+      <data key="value">9</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="7,9">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,0">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,1">
+      <data key="value">2</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,2">
+      <data key="value">3</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,3">
+      <data key="value">4</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,4">
+      <data key="value">5</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,5">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,6">
+      <data key="value">2</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,7">
+      <data key="value">3</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,8">
+      <data key="value">4</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="8,9">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,0">
+      <data key="value">9</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,1">
+      <data key="value">8</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,2">
+      <data key="value">7</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,3">
+      <data key="value">6</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,5">
+      <data key="value">4</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,6">
+      <data key="value">3</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,7">
+      <data key="value">2</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,8">
+      <data key="value">1</data>
+      <data key="type">cell</data>
+    </node>
+    <node id="9,9">
+      <data key="value">0</data>
+      <data key="type">goal</data>
+    </node>
+    <edge source="0,0" target="1,0" />
+    <edge source="0,0" target="0,1" />
+    <edge source="0,1" target="0,2" />
+    <edge source="0,2" target="1,2" />
+    <edge source="0,2" target="0,3" />
+    <edge source="0,3" target="0,4" />
+    <edge source="0,4" target="1,4" />
+    <edge source="0,6" target="1,6" />
+    <edge source="0,6" target="0,7" />
+    <edge source="0,7" target="0,8" />
+    <edge source="0,8" target="1,8" />
+    <edge source="0,8" target="0,9" />
+    <edge source="0,9" target="1,9" />
+    <edge source="1,0" target="2,0" />
+    <edge source="1,2" target="2,2" />
+    <edge source="1,4" target="2,4" />
+    <edge source="1,6" target="2,6" />
+    <edge source="1,8" target="2,8" />
+    <edge source="1,8" target="1,9" />
+    <edge source="1,9" target="2,9" />
+    <edge source="2,0" target="2,1" />
+    <edge source="2,1" target="3,1" />
+    <edge source="2,1" target="2,2" />
+    <edge source="2,2" target="2,3" />
+    <edge source="2,3" target="2,4" />
+    <edge source="2,6" target="2,7" />
+    <edge source="2,7" target="2,8" />
+    <edge source="2,8" target="2,9" />
+    <edge source="2,9" target="3,9" />
+    <edge source="3,1" target="4,1" />
+    <edge source="3,5" target="4,5" />
+    <edge source="3,9" target="4,9" />
+    <edge source="4,0" target="5,0" />
+    <edge source="4,0" target="4,1" />
+    <edge source="4,1" target="4,2" />
+    <edge source="4,2" target="4,3" />
+    <edge source="4,3" target="4,4" />
+    <edge source="4,4" target="5,4" />
+    <edge source="4,4" target="4,5" />
+    <edge source="4,5" target="4,6" />
+    <edge source="4,6" target="4,7" />
+    <edge source="4,7" target="4,8" />
+    <edge source="4,8" target="5,8" />
+    <edge source="4,8" target="4,9" />
+    <edge source="4,9" target="5,9" />
+    <edge source="5,0" target="6,0" />
+    <edge source="5,4" target="6,4" />
+    <edge source="5,8" target="6,8" />
+    <edge source="5,8" target="5,9" />
+    <edge source="5,9" target="6,9" />
+    <edge source="6,0" target="7,0" />
+    <edge source="6,0" target="6,1" />
+    <edge source="6,1" target="6,2" />
+    <edge source="6,2" target="7,2" />
+    <edge source="6,2" target="6,3" />
+    <edge source="6,3" target="6,4" />
+    <edge source="6,4" target="7,4" />
+    <edge source="6,4" target="6,5" />
+    <edge source="6,5" target="6,6" />
+    <edge source="6,6" target="7,6" />
+    <edge source="6,6" target="6,7" />
+    <edge source="6,7" target="6,8" />
+    <edge source="6,8" target="7,8" />
+    <edge source="6,8" target="6,9" />
+    <edge source="6,9" target="7,9" />
+    <edge source="7,0" target="8,0" />
+    <edge source="7,2" target="8,2" />
+    <edge source="7,4" target="8,4" />
+    <edge source="7,6" target="8,6" />
+    <edge source="7,8" target="8,8" />
+    <edge source="7,8" target="7,9" />
+    <edge source="7,9" target="8,9" />
+    <edge source="8,0" target="9,0" />
+    <edge source="8,0" target="8,1" />
+    <edge source="8,1" target="9,1" />
+    <edge source="8,1" target="8,2" />
+    <edge source="8,2" target="9,2" />
+    <edge source="8,2" target="8,3" />
+    <edge source="8,3" target="9,3" />
+    <edge source="8,3" target="8,4" />
+    <edge source="8,4" target="8,5" />
+    <edge source="8,5" target="9,5" />
+    <edge source="8,5" target="8,6" />
+    <edge source="8,6" target="9,6" />
+    <edge source="8,6" target="8,7" />
+    <edge source="8,7" target="9,7" />
+    <edge source="8,7" target="8,8" />
+    <edge source="8,8" target="9,8" />
+    <edge source="8,8" target="8,9" />
+    <edge source="8,9" target="9,9" />
+    <edge source="9,0" target="9,1" />
+    <edge source="9,1" target="9,2" />
+    <edge source="9,2" target="9,3" />
+    <edge source="9,5" target="9,6" />
+    <edge source="9,6" target="9,7" />
+    <edge source="9,7" target="9,8" />
+    <edge source="9,8" target="9,9" />
+  </graph>
+</graphml>
