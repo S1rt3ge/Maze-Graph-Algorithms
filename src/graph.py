@@ -2,15 +2,16 @@
 
 Owner: Oleksii Burianov (foundation).
 
-A `Graph` is an adjacency representation over non-wall cells.
-Each vertex is a (row, col) tuple. Movement mode controls which neighbours
-are connected (4-directional or 8-directional).
+A `Graph` is an adjacency list over the non-wall cells of the maze. Each vertex
+is a `(row, col)` tuple. The movement mode chooses which neighbours are
+connected: 4 cardinal directions, or 4 cardinal + 4 diagonals.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 
+<<<<<<< HEAD
 from . import maze as maze_utils
 
 Vertex = tuple[int, int]
@@ -18,18 +19,38 @@ Vertex = tuple[int, int]
 _DIRS_4 = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 _DIRS_8 = [(-1, 0), (1, 0), (0, -1), (0, 1),
            (-1, -1), (-1, 1), (1, -1), (1, 1)]
+=======
+from . import maze
+
+Vertex = tuple[int, int]
+
+DIRS_4: tuple[tuple[int, int], ...] = (
+    (-1, 0),  # up
+    (1, 0),   # down
+    (0, -1),  # left
+    (0, 1),   # right
+)
+
+DIRS_8: tuple[tuple[int, int], ...] = DIRS_4 + (
+    (-1, -1),  # up-left
+    (-1, 1),   # up-right
+    (1, -1),   # down-left
+    (1, 1),    # down-right
+)
+>>>>>>> 765997de98c4f29f1acfeb16815cf336b679b224
 
 
 @dataclass
 class Graph:
     grid: list[list[str]]
-    mode: int  # 4 or 8
+    mode: int
     adj: dict[Vertex, list[Vertex]] = field(default_factory=dict)
     start: Vertex = (0, 0)
     goal: Vertex = (0, 0)
 
 
 def build(grid: list[list[str]], mode: int = 4) -> Graph:
+<<<<<<< HEAD
     """Construct an adjacency-list graph for the given maze grid."""
     rows = len(grid)
     cols = len(grid[0]) if rows else 0
@@ -38,18 +59,46 @@ def build(grid: list[list[str]], mode: int = 4) -> Graph:
     goal = maze_utils.find(grid, "G")
 
     dirs = _DIRS_8 if mode == 8 else _DIRS_4
+=======
+    """Build an adjacency-list graph for the maze.
+
+    Vertices: every non-wall cell.
+    Edges: between adjacent non-wall cells under the chosen movement mode.
+    """
+    if mode not in (4, 8):
+        raise ValueError(f"mode must be 4 or 8, got {mode}")
+
+    dirs = DIRS_4 if mode == 4 else DIRS_8
+    rows = len(grid)
+    cols = len(grid[0]) if rows else 0
+>>>>>>> 765997de98c4f29f1acfeb16815cf336b679b224
 
     adj: dict[Vertex, list[Vertex]] = {}
     for r in range(rows):
         for c in range(cols):
             if grid[r][c] == "X":
                 continue
+<<<<<<< HEAD
             v: Vertex = (r, c)
+=======
+>>>>>>> 765997de98c4f29f1acfeb16815cf336b679b224
             neighbours: list[Vertex] = []
             for dr, dc in dirs:
                 nr, nc = r + dr, c + dc
                 if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] != "X":
                     neighbours.append((nr, nc))
+<<<<<<< HEAD
             adj[v] = neighbours
 
     return Graph(grid=grid, mode=mode, adj=adj, start=start, goal=goal)
+=======
+            adj[(r, c)] = neighbours
+
+    return Graph(
+        grid=grid,
+        mode=mode,
+        adj=adj,
+        start=maze.find(grid, "S"),
+        goal=maze.find(grid, "G"),
+    )
+>>>>>>> 765997de98c4f29f1acfeb16815cf336b679b224
